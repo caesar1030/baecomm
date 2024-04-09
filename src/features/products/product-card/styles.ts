@@ -28,6 +28,7 @@ export const ProductCard = styled(Link)`
   border-radius: 16px;
   overflow: hidden;
   padding: 16px;
+  color: inherit;
   text-decoration: none;
 
   &:hover {

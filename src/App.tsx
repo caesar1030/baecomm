@@ -9,7 +9,7 @@ const App = () => {
       <Routes>
         <Route index element={<Navigate replace to={PRODUCTS}></Navigate>} />
         <Route path={PRODUCTS} element={<Products />} />
-        <Route path={PRODUCT} element={<Product />} />
+        <Route path={`${PRODUCT}/:id`} element={<Product />} />
       </Routes>
     </BrowserRouter>
   );
