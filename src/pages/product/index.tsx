@@ -1,13 +1,13 @@
-import GoBackButton from '../../features/products/go-back-button';
+import BackProductsButton from '../../common-ui/back-products-button';
 import ProductDetail from '../../features/products/product-detail';
 
 const Product = () => {
   return (
-    <div>
-      <GoBackButton />
+    <>
+      <BackProductsButton />
 
       <ProductDetail />
-    </div>
+    </>
   );
 };
 

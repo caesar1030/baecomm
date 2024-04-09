@@ -4,13 +4,13 @@ import SearchBar from '../../features/products/search-bar';
 
 const Products = () => {
   return (
-    <div>
+    <>
       <SearchBar />
 
       <ProductList />
 
       <LoadMoreButton />
-    </div>
+    </>
   );
 };
 

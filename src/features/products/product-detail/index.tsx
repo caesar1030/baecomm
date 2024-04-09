@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { RootState } from '../../../store';
+import * as S from './styles';
+import { useEffect } from 'react';
 
 type ProductDetailParam = {
   id: string;
@@ -8,26 +10,42 @@ type ProductDetailParam = {
 
 const ProductDetail = () => {
   const { id } = useParams<ProductDetailParam>();
+  const navigate = useNavigate();
   const productID = Number(id);
   const product = useSelector((state: RootState) =>
     state.products.products.find((product) => product.id === productID)
   );
 
-  //   TODO: 404페이지 구현
-  if (!product) return <div>404</div>;
+  useEffect(() => {
+    if (!product) {
+      navigate('/not-found', { replace: true });
+    }
+  }, [product, navigate]);
+
+  if (!product) {
+    return null;
+  }
 
   const { thumbnail, brand, title, price, description, images } = product;
+
   return (
-    <div>
-      <img src={thumbnail} alt="제품 썸네일" />
-      <span>{brand}</span>
-      <span>{title}</span>
-      <span>{price}</span>
-      <span>{description}</span>
-      {images.map((image) => (
-        <img key={image} src={image} alt="제품 사진" />
-      ))}
-    </div>
+    <>
+      <S.ProductDetail>
+        <S.ThumbnailCard as="img" src={thumbnail} alt="제품 썸네일" />
+        <S.InfoCard>
+          <span>{brand}</span>
+          <S.Title>{title}</S.Title>
+          <span>${price}</span>
+          <S.Description>{description}</S.Description>
+        </S.InfoCard>
+      </S.ProductDetail>
+
+      <S.ImageContainer>
+        {images.map((image) => (
+          <S.Image key={image} src={image} alt="제품 사진" />
+        ))}
+      </S.ImageContainer>
+    </>
   );
 };
 
