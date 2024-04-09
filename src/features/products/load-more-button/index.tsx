@@ -5,7 +5,7 @@ import { loadMoreProducts } from '../products-slice';
 const LoadMoreButton = () => {
   const isMaximum = useSelector((state: RootState) => {
     const { skip, total } = state.products;
-    return total && total <= skip;
+    return total <= skip;
   });
   const dispatch = useDispatch<AppDispatch>();
 

@@ -1,11 +1,15 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../store';
-import { loadProductsBySearch } from '../products-slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../store';
 import * as S from './styles';
+import { loadInitialProducts } from '../products-slice';
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const searchedTerm = useSelector(
+    (state: RootState) => state.products.searchTerm
+  );
+  const [searchTerm, setSearchTerm] = useState(searchedTerm);
+
   const dispatch = useDispatch<AppDispatch>();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +19,7 @@ const SearchBar = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch(loadProductsBySearch(searchTerm));
+    dispatch(loadInitialProducts(searchTerm));
   };
 
   return (

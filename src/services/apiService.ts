@@ -1,17 +1,13 @@
 import { TProductsApiResponse } from '../types/api-response';
 
-export const fetchProductsApi = async (limit: number, skip: number) => {
-  const res = await fetch(
-    `https://dummyjson.com/products?limit=${limit}&skip=${skip}`
-  );
-  const data = await res.json();
+const BASE_URL = 'https://dummyjson.com/products';
+const LIMIT = 10;
 
-  return data as TProductsApiResponse;
-};
-
-export const fetchProductsBySearchApi = async (searchTerm: string) => {
+export const fetchProductsApi = async (skip: number, searchTerm = '') => {
   const res = await fetch(
-    `https://dummyjson.com/products/search?q=${searchTerm}`
+    `${BASE_URL}${
+      searchTerm ? `/search?q=${searchTerm}&` : '?'
+    }limit=${LIMIT}&skip=${skip}`
   );
   const data = await res.json();
 
