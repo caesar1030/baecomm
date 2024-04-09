@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TProduct } from '../../types/product';
-import { fetchProductsApi } from '../../services/apiService';
+import {
+  fetchProductsApi,
+  fetchProductsBySearchApi,
+} from '../../services/apiService';
 import { TProductsApiResponse } from '../../types/api-response';
 import { RootState } from '../../store';
 
@@ -33,6 +36,12 @@ const productsSlice = createSlice({
         state.products = [...state.products, ...products];
         state.total = total;
         state.skip = skip + LIMIT;
+      })
+      .addCase(loadProductsBySearch.fulfilled, (state, action) => {
+        const { products, skip, total } = action.payload;
+        state.products = products;
+        state.total = total;
+        state.skip = skip + LIMIT;
       });
   },
 });
@@ -56,5 +65,14 @@ export const loadMoreProducts = createAsyncThunk<
 
   return data;
 });
+
+export const loadProductsBySearch = createAsyncThunk(
+  'products/loadProductsBySearch',
+  async (searchTerm: string) => {
+    const data = await fetchProductsBySearchApi(searchTerm);
+
+    return data;
+  }
+);
 
 export default productsSlice.reducer;
