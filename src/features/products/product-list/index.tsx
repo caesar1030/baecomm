@@ -21,10 +21,10 @@ const ProductList = () => {
   }, [dispatch, searchTerm]);
 
   useEffect(() => {
-    if (searchTerm) {
-      const savedScrollPosition = sessionStorage.getItem('scrollPosition');
-      savedScrollPosition && window.scrollTo(0, Number(savedScrollPosition));
-    }
+    if (!searchTerm) return;
+
+    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+    savedScrollPosition && window.scrollTo(0, Number(savedScrollPosition));
 
     const handleScroll = () =>
       sessionStorage.setItem('scrollPosition', String(window.scrollY));
