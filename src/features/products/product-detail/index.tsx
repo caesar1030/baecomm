@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { RootState } from '../../../store';
 import * as S from './styles';
-import { useEffect } from 'react';
+import useNotFound from '../../../hooks/use-not-found';
 
 type ProductDetailParam = {
   id: string;
@@ -10,17 +10,12 @@ type ProductDetailParam = {
 
 const ProductDetail = () => {
   const { id } = useParams<ProductDetailParam>();
-  const navigate = useNavigate();
   const productID = Number(id);
   const product = useSelector((state: RootState) =>
     state.products.products.find((product) => product.id === productID)
   );
 
-  useEffect(() => {
-    if (!product) {
-      navigate('/not-found', { replace: true });
-    }
-  }, [product, navigate]);
+  useNotFound(!product);
 
   if (!product) {
     return null;
