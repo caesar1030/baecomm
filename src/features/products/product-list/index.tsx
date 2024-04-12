@@ -6,6 +6,7 @@ import GridItems from '../../../common-ui/grid-items';
 import ProductCard from '../product-card';
 
 const COLUMN = 2;
+const SCROLL_POSITON_KEY = 'scrollPosition';
 
 const ProductList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,11 +24,11 @@ const ProductList = () => {
   useEffect(() => {
     if (!searchTerm) return;
 
-    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+    const savedScrollPosition = sessionStorage.getItem(SCROLL_POSITON_KEY);
     savedScrollPosition && window.scrollTo(0, Number(savedScrollPosition));
 
     const handleScroll = () =>
-      sessionStorage.setItem('scrollPosition', String(window.scrollY));
+      sessionStorage.setItem(SCROLL_POSITON_KEY, String(window.scrollY));
 
     window.addEventListener('scroll', handleScroll);
 
