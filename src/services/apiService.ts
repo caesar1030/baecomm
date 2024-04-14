@@ -9,6 +9,9 @@ export const fetchProductsApi = async (skip: number, searchTerm = '') => {
       searchTerm ? `/search?q=${searchTerm}&` : '?'
     }limit=${LIMIT}&skip=${skip}`
   );
+
+  if (!res.ok) throw new Error('failed to get products');
+
   const data = await res.json();
 
   return data as TProductsApiResponse;
